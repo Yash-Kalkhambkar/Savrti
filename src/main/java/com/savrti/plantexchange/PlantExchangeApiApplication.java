@@ -25,6 +25,11 @@ public class PlantExchangeApiApplication {
     public CommandLineRunner loadData(UserRepository userRepo, PlantRepository plantRepo,
                                       RequestRepository requestRepo, PasswordEncoder passwordEncoder) {
         return args -> {
+            // Only seed if the database is empty
+            if (userRepo.count() > 0) {
+                return;
+            }
+
             User admin   = new User("Admin User", "admin@savrti.com", passwordEncoder.encode("admin123"), UserType.ADMIN);
             User member1 = new User("John Doe",   "john@email.com",  passwordEncoder.encode("password123"), UserType.MEMBER);
             User member2 = new User("Jane Smith", "jane@email.com",  passwordEncoder.encode("password123"), UserType.MEMBER);
