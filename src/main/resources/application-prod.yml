@@ -26,6 +26,9 @@ spring:
     console:
       enabled: false
 
+server:
+  port: ${PORT:8080}
+
 app:
   jwt:
     secret: ${JWT_SECRET}
