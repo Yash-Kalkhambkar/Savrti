@@ -2,9 +2,15 @@ package com.savrti.plantexchange.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "requests")
+@EntityListeners(AuditingEntityListener.class)
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +29,14 @@ public class Request {
     @NotNull(message = "Request status is required")
     @Enumerated(EnumType.STRING)
     private RequestStatus requestStatus;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
     
     public Request() {}
     
@@ -44,4 +58,7 @@ public class Request {
     
     public RequestStatus getRequestStatus() { return requestStatus; }
     public void setRequestStatus(RequestStatus requestStatus) { this.requestStatus = requestStatus; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
 }
